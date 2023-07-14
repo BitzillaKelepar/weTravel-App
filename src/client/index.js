@@ -1,6 +1,6 @@
 //import { formatScoreTag } from "./js/formatScoreTag"
 import { handleSubmit } from "./js/formHandler"
-//import { isUrl } from "./js/urlChecker"
+import { isFutureDate, getTripDuration } from "./js/dateChecker"
 
 import "./styles/style.scss"
 
@@ -10,5 +10,6 @@ console.log("CHANGE!!");*/
 export {
     //formatScoreTag,
     handleSubmit,
-    //isUrl
+    getTripDuration,
+    isFutureDate
 }

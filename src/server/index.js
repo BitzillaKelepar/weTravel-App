@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
 app.post("/location", async function (req, res) {
     let projectData = req.body;
     console.log(`Your Data: ${projectData}`);
-    const geoNameURL = `${geoNameBaseURL}placename=${req.body.location}}&maxRows=10&username=${geoNameApi}`;
+    const geoNameURL = `${geoNameBaseURL}placename=${req.body.location}&maxRows=10&username=${geoNameApi}`;
     const response = await fetch(geoNameURL);
     try {
         const gData = await response.json();
