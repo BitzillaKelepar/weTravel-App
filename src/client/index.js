@@ -1,6 +1,6 @@
-import { formatScoreTag } from "./js/formatScoreTag"
+//import { formatScoreTag } from "./js/formatScoreTag"
 import { handleSubmit } from "./js/formHandler"
-import { isUrl } from "./js/urlChecker"
+//import { isUrl } from "./js/urlChecker"
 
 import "./styles/style.scss"
 
@@ -8,7 +8,7 @@ import "./styles/style.scss"
 console.log("CHANGE!!");*/
 
 export {
-    formatScoreTag,
+    //formatScoreTag,
     handleSubmit,
-    isUrl
+    //isUrl
 }

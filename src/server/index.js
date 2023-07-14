@@ -40,8 +40,8 @@ function listening() {
 let projectData = {};
 
 // API Keys
-const geoNameApi = process.env.USERNAME;
-console.log(`Your GeoNames API is: ${process.env.USERNAME}`);
+const geoNameApi = process.env.GUSERNAME;
+console.log(`Your GeoNames API is: ${process.env.GUSERNAME}`);
 const weatherBitApi = process.env.WEATHERBIT_KEY;
 console.log(`Your WeatherBit API is: ${process.env.WEATHERBIT_KEY}`);
 const pixaBayApi = process.env.PIXABAY_KEY;

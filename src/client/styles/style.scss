@@ -1,16 +1,17 @@
-/*$primary-font: "Poppins", sans-serif;*/
-/*$primary-color: #4F46E5;*/
+$primary-font: "Poppins", sans-serif;
+$primary-color: #4F46E5;
+$secondary-color: #343434;
 
 body {
     background: #f3f3f3;
-    font-family: "Poppins", sans-serif;
+    font-family: $primary-font;
 }
 
 .input-box label {
     font-size: 1rem;
     justify-content: flex-start;
     align-items: start;
-    color: #343434;
+    color: $secondary-color;
     margin: 0 0 0.5rem 0;
 }
 
@@ -28,7 +29,7 @@ body {
     justify-content: center;
     grid-gap: 1em;
     font-size: 20px;
-    font-family: "Poppins", sans-serif;
+    font-family: $primary-font;
 }
 
 #info {
@@ -54,7 +55,7 @@ body {
 }
 
 #name {
-    color: #4F46E5;
+    color: $primary-color;
     font-size: 22px;
     margin: 0px 0 10px 0;
 }
@@ -93,9 +94,9 @@ input {
     display: block;
     height: 40px;
     background: #f3f3f3;
-    color: #343434;
+    color: $secondary-color;
     font-size: 16px;
-    font-family: "Poppins", sans-serif;
+    font-family: $primary-font;
     border: none;
     border-radius: 8px;
     padding: 0 0.5rem;
@@ -107,10 +108,10 @@ button {
     align-items: center;
     width: 160px;
     height: 40px;
-    background: #4F46E5;
+    background: $primary-color;
     color: #fff;
     font-size: 1rem;
-    font-family: "Poppins", sans-serif;
+    font-family: $primary-font;
     border: none;
     border-radius: 8px;
     margin: 30px 0 0 0;
@@ -118,7 +119,7 @@ button {
 
 button:hover {
     cursor: pointer;
-    background: #343434;
+    background: $secondary-color;
     color: #f3f3f3;
 }
 
@@ -145,7 +146,7 @@ footer {
 }
 
 .title {
-    color: #4F46E5;
+    color: $primary-color;
     font-size: 26px;
     margin: 2rem 0 1rem 0;
     text-align: center;
@@ -183,7 +184,7 @@ footer {
 
 .empty p {
     font-size: 1rem;
-    color: #343434;
+    color: $secondary-color;
 }
 
 
@@ -198,20 +199,20 @@ button:focus {
 
 /* Style for Placeholder Text*/
 ::placeholder { /* Firefox, Chrome, Opera */
-    color: #4F46E5;
-    font-family: "Poppins", sans-serif;
+    color: $primary-color;
+    font-family: $primary-font;
 
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #4F46E5;
-    font-family: "Poppins", sans-serif;
+    color: $primary-color;
+    font-family: $primary-font;
 
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-    color: #4F46E5;
-    font-family: "Poppins", sans-serif;
+    color: $primary-color;
+    font-family: $primary-font;
 
 }
 
