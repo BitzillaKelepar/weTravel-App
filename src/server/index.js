@@ -48,32 +48,44 @@ const pixaBayApi = process.env.PIXABAY_KEY;
 console.log(`Your PixaBay API is: ${process.env.PIXABAY_KEY}`);
 
 // Base URLs
-const geoNameBaseURL = "http://api.geonames.org/PlacenameSearchJSON?";
+const geoNameBaseURL = "http://api.geonames.org/searchJSON?q=";
 
 app.get('/', function (req, res) {
     res.sendFile("dist/index.html");
 })
 
-// GeoNames POST Route
+// Post Rout GeoNames
 app.post("/location", async function (req, res) {
-    let projectData = req.body;
-    console.log(`Your Data: ${projectData}`);
-    const geoNameURL = `${geoNameBaseURL}placename=${req.body.location}&maxRows=10&username=${geoNameApi}`;
-    const response = await fetch(geoNameURL);
     try {
-        const gData = await response.json();
-        console.log(gData);
-        res.send(gData);
+        let location = req.body.location;
+        const geoApiCall = `${geoNameBaseURL}${location}&maxRows=10&username=${geoNameApi}`;
+        const response = await fetch(geoApiCall);
+        const geoData = await response.json();
+        res.send(geoData.geonames[0]);
+    } catch (error) {
+        console.log("error while retrieving GeoNames data", error);
+    }
+});
+
+
+// POST Route
+app.post("/postData", async function (req, res) {
+    try {
+        let projectData = req.body;
+        console.log(`Your Data: ${projectData}`);
+        res.send(projectData);
     } catch (error) {
         console.log("error", error);
     }
 });
 
 // WeatherBit POST Route
-app.post("/weather", async function (req, res) {});
+app.post("/weather", async function (req, res) {
+});
 
 // PixaBay POST Route
-app.post("/picture", async function (req, res) {});
+app.post("/picture", async function (req, res) {
+});
 
 // GET Route
 app.get('/all', function (req, res) {

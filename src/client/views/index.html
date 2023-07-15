@@ -12,7 +12,7 @@
         <div id="app">
             <div class="title">Travel Planner</div>
             <div id="info">
-                <form class="trip-input">
+                <form class="trip-input" onsubmit="return Client.handleSubmit(event)">
                     <!--input-->
                     <div class="input-box">
                         <label for="location">Where to go:</label>
@@ -29,7 +29,8 @@
                         </div>
                     </div>
                 </form>
-                <button id="generate" onclick="return Client.handleSubmit(event)">add trip
+                <button id="generate" type="submit" onclick="return Client.handleSubmit(event)"
+                        onsubmit="return Client.handleSubmit(event)">add trip
                 </button>
             </div>
             <div id="empty" class="empty">

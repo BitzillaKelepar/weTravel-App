@@ -7,32 +7,7 @@ import {getTripDuration, isFutureDate} from "./dateChecker";
 // Create a new date instance dynamically with JS
 let d = new Date();
 
-// Post data function
-const postData = async (url = "", data = {}) => {
-    // Debugging
-    console.log(data);
-    const res = await fetch(url, {
-        method: "POST",
-        credentials: "same-origin",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-    });
-
-    try {
-        const locationData = await res.json();
-        // Debugging
-        console.log(`>>> Returned Data from GeoNames: ${locationData} <<<`);
-        return locationData;
-    } catch (error) {
-        console.log("error", error);
-    }
-};
-
-// Update displayed weather data
-
+// Update displayed data on submit
 function handleSubmit(event) {
     event.preventDefault();
     // check if location is valid
@@ -50,11 +25,11 @@ function handleSubmit(event) {
         // Debugging
         console.log(`::: Form submitted with valid dates :::`);
         console.log(`::: The trip duration is: ${tripDuration} days :::`);
-        
-        /*postData("/location", formLocation)
+
+        postData("http://localhost:8081/location", {location: formLocation})
             .then(function (res) {
-                updateUI(res)
-            })*/
+                console.log(res);
+            });
         
     } else if ((isFutureDate(formDate1) && isFutureDate(formDate2)) && (tripDuration < 1)){
         alert("Please provide a valid trip duration. The submitted return date is before the departure.");
@@ -62,6 +37,38 @@ function handleSubmit(event) {
         alert("Please provide a date in the future. The submitted date is in the past.");
     }
 }
+
+// Get GeoNames Data
+const getGeoName = async (geoNameBaseURL, formLocation, geoNameApi) => {
+    try {
+        const res = await fetch(geoNameBaseURL + formLocation + "&maxRows=10&username=" + geoNameApi);
+        return await res.json();
+    } catch (error) {
+        console.log("error while retrieving GeoNames data", error);
+        alert("error while retrieving GeoNames data");
+    }
+}
+
+// Post data function
+const postData = async (url = "", data = {}) => {
+    // Debugging
+    console.log(data);
+    const res = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    });
+    try {
+        return await res.json();
+    } catch (error) {
+        console.log("error", error);
+    }
+};
+
 /*function updateInfo(e) {
     e.preventDefault();
     let formLocation = document.getElementById("location").value.trim();
@@ -83,6 +90,7 @@ function handleSubmit(event) {
 }*/
 
 // Get the weather information
+
 /*const getWeather = async (baseURL, newZip, apiKey) => {
     try {
         const res = await fetch(baseURL + newZip + apiKey);
@@ -102,33 +110,9 @@ function handleSubmit(event) {
     }
 };*/
 
-// Post data function
-/*const postData = async (url = "", data = {}) => {
-    const res = await fetch(url, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: data.name,
-            temp: data.temp,
-            date: data.date,
-            content: data.content
-        })
-    });
-
-    try {
-        const newData = await res.json();
-        return newData;
-    } catch (error) {
-        console.log("error", error);
-    }
-};*/
-
 // Update UI function
 const updateUI = async () => {
-    const req = await fetch("http://localhost:8081/location");
+    const req = await fetch("http://localhost:8081/all");
     try {
         const allData = await req.json();
         console.log(allData)
