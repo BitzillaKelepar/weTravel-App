@@ -9,9 +9,16 @@ function getTripDuration() {
     const dReturn = document.getElementById("return").value;
     const oDeparture  = new Date(dDeparture);
     const oReturn  = new Date(dReturn);
-    const diffDays = ((oReturn - oDeparture) / (1000 * 60 * 60 * 24)) + 1;
-    return diffDays
+    return ((oReturn - oDeparture) / (1000 * 60 * 60 * 24)) + 1
 }
 
+function getTripStart() {
+    const dDeparture = document.getElementById("depart").value;
+    const oDeparture  = new Date(dDeparture);
+    const oNow = new Date();
+    return ((oDeparture - oNow) / (1000 * 60 * 60 * 24))
+}
+
+export {getTripStart}
 export {isFutureDate}
 export {getTripDuration}

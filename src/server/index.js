@@ -36,8 +36,8 @@ function listening() {
     console.log(`server is running on localhost: ${port}`);
 }
 
-// Initialize empty Projectdata
-let projectData = {};
+// Initialize empty trip object
+let myTrip = {};
 
 // API Keys
 const geoNameApi = process.env.GUSERNAME;
@@ -49,6 +49,8 @@ console.log(`Your PixaBay API is: ${process.env.PIXABAY_KEY}`);
 
 // Base URLs
 const geoNameBaseURL = "http://api.geonames.org/searchJSON?q=";
+const weatherBitBaseURL = "https://api.weatherbit.io/v2.0/forecast/daily?";
+
 
 app.get('/', function (req, res) {
     res.sendFile("dist/index.html");
@@ -62,11 +64,38 @@ app.post("/location", async function (req, res) {
         const response = await fetch(geoApiCall);
         const geoData = await response.json();
         res.send(geoData.geonames[0]);
+        myTrip = {
+            location: geoData.geonames[0].name,
+            country: geoData.geonames[0].countryName,
+        };
     } catch (error) {
         console.log("error while retrieving GeoNames data", error);
     }
 });
 
+// POST Route WeatherBit
+app.post("/weather", async function (req, res) {
+    try {
+        let lat = req.body.lat;
+        let lng = req.body.lng;
+        const weatherBitApiCall = `${weatherBitBaseURL}lat=${lat}&lon=${lng}&key=${weatherBitApi}`;
+        const response = await fetch(weatherBitApiCall);
+        const weatherBitData = await response.json();
+        console.log(weatherBitData);
+        res.send(weatherBitData);
+        myTrip = {
+            temp: "temp",
+            high: "high_temp",
+            low: "low_temp"
+        };
+    } catch (error) {
+        console.log("error while retrieving WeatherBit data", error);
+    }
+});
+
+// PixaBay POST Route
+app.post("/picture", async function (req, res) {
+});
 
 // POST Route
 app.post("/postData", async function (req, res) {
@@ -79,15 +108,7 @@ app.post("/postData", async function (req, res) {
     }
 });
 
-// WeatherBit POST Route
-app.post("/weather", async function (req, res) {
-});
-
-// PixaBay POST Route
-app.post("/picture", async function (req, res) {
-});
-
 // GET Route
 app.get('/all', function (req, res) {
-    res.send(projectData);
+    res.send(myTrip);
 })
