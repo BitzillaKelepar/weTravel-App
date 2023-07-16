@@ -1,7 +1,7 @@
 import {getTripDuration, getTripStart, isFutureDate} from "./dateChecker";
 
 /* Eventlistener for DOM manipulation */
-// const removeTrip = document.getElementById("remove");
+// const removeTrip = document.getElementById("remove-trip");
 // removeTrip.addEventListener("click", function);
 
 // Update displayed data on submit
@@ -27,7 +27,7 @@ function handleSubmit(event) {
                 // Debugging - OK
                 console.log(locationData);
                 getWeather("http://localhost:8081/weather", locationData.lat, locationData.lng)
-                    .then(function(res){
+                    .then(function (res) {
                         // Debugging - OK
                         // console.log(res);
                         addTrip(locationData, res);
@@ -81,32 +81,78 @@ const getWeather = async (url = "", latitude = {}, longitude = {}) => {
     }
 };
 
+// remove trip function
+function removeTrip() {
+    
+}
+
 // Update UI function
 function addTrip(resGeo, resWB) {
     // Debugging
     console.log(resGeo);
     console.log(resWB);
-    
+
     try {
         const duration = getTripDuration();
         const tripStart = getTripStart();
         const depart = document.getElementById("depart").value;
         const leave = document.getElementById("return").value;
-        console.log(`My Trip to ${resGeo.name}, ${resGeo.countryName}`);
+        
+        // Debugging - OK
+        /*console.log(`My Trip to ${resGeo.name}, ${resGeo.countryName}`);
         console.log(`is in ${tripStart} day(s) from ${depart} to ${leave} and lasts ${duration} day(s).`);
-        console.log(`It's currently ${resWB.data[0].temp} C° today.`);
-        
+        console.log(`It's currently ${resWB.data[0].temp} C° today.`);*/
+
         // update DOM
+        // add heading
+        const destinationTDiv = document.createElement("div");
+        destinationTDiv.classList.add("trip-text1");
+        destinationTDiv.innerHTML = "My trip to:";
+
         // add city & country
-        // document.getElementById("destination").innerHTML = `${resGeo.name}, ${resGeo.countryName}`;
+        const destinationDiv = document.createElement("div");
+        destinationDiv.classList.add("trip-title");
+        destinationDiv.innerHTML = `${resGeo.name}, ${resGeo.countryName}`;
+
         // add trip date
-        // document.getElementById("date").innerHTML = `From ${depart} until ${leave}`;
+        const dateDiv = document.createElement("div");
+        dateDiv.classList.add("trip-text1");
+        dateDiv.innerHTML = `From ${depart} until ${leave}`;
+
         // add trip duration
-        // document.getElementById("duration").innerHTML = `You will stay a total of ${duration} day(s)`;
-        // Add Temp
-        // document.getElementById("temp").innerHTML = `Today's current weather:`;
-        // document.getElementById("temp").innerHTML = `${resWB.data[0].temp} C°`;
+        const durationDiv = document.createElement("div");
+        durationDiv.classList.add("trip-text2");
+        durationDiv.innerHTML = `You will stay a total of ${duration} day(s)`;
+
+        // add days to trip start
+        const daysDiv = document.createElement("div");
+        daysDiv.classList.add("trip-text3");
+        daysDiv.innerHTML = `The trip starts in ${tripStart} day(s)`;
+
+        // add text and temp
+        const tempTDiv = document.createElement("div");
+        const tempDiv = document.createElement("div");
+        tempTDiv.classList.add("trip-text3");
+        tempDiv.classList.add("trip-text-temp");
+        tempTDiv.innerHTML = `Today's current weather:`;
+        tempDiv.innerHTML = `${resWB.data[0].temp} C°`;
         
+        // add remove trip button
+        const button = document.createElement("button");
+        button.id = "remove-trip";
+        button.innerHTML = "remove trip";
+
+        // add divs to DOM
+        const content = document.getElementById("content");
+        content.appendChild(destinationTDiv);
+        content.appendChild(destinationDiv);
+        content.appendChild(dateDiv);
+        content.appendChild(durationDiv);
+        content.appendChild(daysDiv);
+        content.appendChild(tempTDiv);
+        content.appendChild(tempDiv);
+        content.appendChild(button);
+
     } catch (error) {
         console.log("error", error);
     }
