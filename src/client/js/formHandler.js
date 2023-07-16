@@ -1,4 +1,4 @@
-import {getTripDuration, isFutureDate} from "./dateChecker";
+import {getTripDuration, getTripStart, isFutureDate} from "./dateChecker";
 
 /* Eventlistener for DOM manipulation */
 // const removeTrip = document.getElementById("remove");
@@ -13,14 +13,14 @@ function handleSubmit(event) {
     const formDate1 = document.getElementById("depart").value;
     const formDate2 = document.getElementById("return").value;
     const tripDuration = getTripDuration();
-    // Debugging
-    console.log(`::: Form submitted for: ${formLocation} :::`);
-    console.log(`::: Form submitted for: ${formDate1} until ${formDate2}:::`);
+    // Debugging - OK
+    // console.log(`::: Form submitted for: ${formLocation} :::`);
+    // console.log(`::: Form submitted for: ${formDate1} until ${formDate2}:::`);
 
     // check if date is not in past
     if ((isFutureDate(formDate1) && isFutureDate(formDate2)) && (tripDuration >= 1)) {
-        // Debugging
-        console.log(`::: The trip duration is: ${tripDuration} days :::`);
+        // Debugging - OK
+        // console.log(`::: The trip duration is: ${tripDuration} days :::`);
 
         getLocation("http://localhost:8081/location", {location: formLocation})
             .then(function (locationData) {
@@ -29,7 +29,8 @@ function handleSubmit(event) {
                 getWeather("http://localhost:8081/weather", locationData.lat, locationData.lng)
                     .then(function(res){
                         // Debugging - OK
-                        console.log(res);
+                        // console.log(res);
+                        addTrip(locationData, res);
                     });
             });
 
@@ -80,61 +81,35 @@ const getWeather = async (url = "", latitude = {}, longitude = {}) => {
     }
 };
 
-/*function updateInfo(e) {
-    e.preventDefault();
-    let formLocation = document.getElementById("location").value.trim();
-    const isValidLocation = Client.isValidLocation(formLocation);
-    console.log(formLocation);
-
-    getWeather(baseURL, newZip, apiKey)
-        .then(function (data) {
-            // add data to POST request
-            postData("http://localhost:8008/add", {
-                name: data.name,
-                date: newDate,
-                temp: data.main.temp,
-                content
-            }).then(function () {
-                //updateUI() 
-            });
-        })
-}*/
-
-// Get the weather information
-
-/*const getWeather = async (baseURL, newZip, apiKey) => {
-    try {
-        const res = await fetch(baseURL + newZip + apiKey);
-        const data = await res.json();
-
-        if (data.cod !== 200) {
-            document.getElementById("error").innerHTML = "City not found. Enter a valid zip code.";
-            document.getElementById("entryHolder").style.display = "none";
-
-        } else {
-            document.getElementById("error").innerHTML = "";
-            document.getElementById("entryHolder").style.display = "block";
-            return data;
-        }
-    } catch (error) {
-        console.log("error", error);
-    }
-};*/
-
 // Update UI function
-const updateUI = async () => {
-    const req = await fetch("http://localhost:8081/all");
+function addTrip(resGeo, resWB) {
+    // Debugging
+    console.log(resGeo);
+    console.log(resWB);
+    
     try {
-        const allData = await req.json();
-        console.log(allData)
+        const duration = getTripDuration();
+        const tripStart = getTripStart();
+        const depart = document.getElementById("depart").value;
+        const leave = document.getElementById("return").value;
+        console.log(`My Trip to ${resGeo.name}, ${resGeo.countryName}`);
+        console.log(`is in ${tripStart} day(s) from ${depart} to ${leave} and lasts ${duration} day(s).`);
+        console.log(`It's currently ${resWB.data[0].temp} C° today.`);
+        
         // update DOM
-        /*document.getElementById("name").innerHTML = allData.name;
-        document.getElementById("date").innerHTML = allData.date;
-        document.getElementById("temp").innerHTML = allData.temp + " °F";
-        document.getElementById("content").innerHTML = allData.content;*/
+        // add city & country
+        // document.getElementById("destination").innerHTML = `${resGeo.name}, ${resGeo.countryName}`;
+        // add trip date
+        // document.getElementById("date").innerHTML = `From ${depart} until ${leave}`;
+        // add trip duration
+        // document.getElementById("duration").innerHTML = `You will stay a total of ${duration} day(s)`;
+        // Add Temp
+        // document.getElementById("temp").innerHTML = `Today's current weather:`;
+        // document.getElementById("temp").innerHTML = `${resWB.data[0].temp} C°`;
+        
     } catch (error) {
         console.log("error", error);
     }
-};
+}
 
 export {handleSubmit}

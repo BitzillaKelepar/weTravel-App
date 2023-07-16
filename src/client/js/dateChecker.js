@@ -16,7 +16,8 @@ function getTripStart() {
     const dDeparture = document.getElementById("depart").value;
     const oDeparture  = new Date(dDeparture);
     const oNow = new Date();
-    return ((oDeparture - oNow) / (1000 * 60 * 60 * 24))
+    const daysDiff = ((oDeparture - oNow) / (1000 * 60 * 60 * 24));
+    return Math.round(daysDiff);
 }
 
 export {getTripStart}

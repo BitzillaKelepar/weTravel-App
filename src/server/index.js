@@ -50,6 +50,7 @@ console.log(`Your PixaBay API is: ${process.env.PIXABAY_KEY}`);
 // Base URLs
 const geoNameBaseURL = "http://api.geonames.org/searchJSON?q=";
 const weatherBitBaseURL = "https://api.weatherbit.io/v2.0/forecast/daily?";
+const pixaBayBaseURL = "https://pixabay.com/api/";
 
 
 app.get('/', function (req, res) {
@@ -84,7 +85,8 @@ app.post("/weather", async function (req, res) {
         console.log(weatherBitData);
         res.send(weatherBitData);
         myTrip = {
-            temp: "temp",
+            temp1: weatherBitData.data[0].temp,
+            temp2: weatherBitData.data[1].temp,
             high: "high_temp",
             low: "low_temp"
         };
