@@ -2,15 +2,20 @@ import {getTripDuration, getTripStart, isFutureDate} from "./dateChecker";
 
 /* Helpers for DOM manipulation */
 let counter = 0;
-document.querySelector("button").addEventListener("click", function(e) {
+let result = document.getElementById("result");
+result.addEventListener("click", function(e) {
     e.preventDefault();
-    const buttonID = this.getAttribute("id");
-    if (buttonID.indexOf("remove")) {
+    const isButton = e.target.nodeName === "BUTTON";
+    const buttonID = e.target.id;
+    if (!isButton) {
+        
+    } else {
         const button = document.getElementById(buttonID);
         console.log(`::: ${buttonID} has been clicked :::`);
-        /*const parent = button.parentNode;
-        parent.remove();*/
-    }
+        const parent0 = button.parentNode;
+        const parent1 = parent0.parentNode;
+        parent1.remove();
+     }
 });
 
 // Update displayed data on submit
@@ -153,7 +158,7 @@ function addTrip(resGeo, resWB) {
         tempDiv.innerHTML = `${resWB.data[0].temp} C°`;
         
         // add remove trip button
-        const button = document.createElement("button");
+        let button = document.createElement("button");
         button.id = `remove-trip${counter}`;
         button.innerHTML = "remove trip";
         
