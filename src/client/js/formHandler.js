@@ -1,8 +1,17 @@
 import {getTripDuration, getTripStart, isFutureDate} from "./dateChecker";
 
-/* Eventlistener for DOM manipulation */
-// const removeTrip = document.getElementById("remove-trip");
-// removeTrip.addEventListener("click", function);
+/* Helpers for DOM manipulation */
+let counter = 0;
+document.querySelector("button").addEventListener("click", function(e) {
+    e.preventDefault();
+    const buttonID = this.getAttribute("id");
+    if (buttonID.indexOf("remove")) {
+        const button = document.getElementById(buttonID);
+        console.log(`::: ${buttonID} has been clicked :::`);
+        /*const parent = button.parentNode;
+        parent.remove();*/
+    }
+});
 
 // Update displayed data on submit
 function handleSubmit(event) {
@@ -82,8 +91,8 @@ const getWeather = async (url = "", latitude = {}, longitude = {}) => {
 };
 
 // remove trip function
-function removeTrip() {
-    
+function removeTrip(e) {
+    // document.body.removeChild(this.parentNode)
 }
 
 // Update UI function
@@ -104,6 +113,12 @@ function addTrip(resGeo, resWB) {
         console.log(`It's currently ${resWB.data[0].temp} C° today.`);*/
 
         // update DOM
+        const empty = document.getElementById("empty");
+        empty.style.visibility = "hidden";
+
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.marginTop = "-15rem";
+        
         // add heading
         const destinationTDiv = document.createElement("div");
         destinationTDiv.classList.add("trip-text1");
@@ -139,19 +154,35 @@ function addTrip(resGeo, resWB) {
         
         // add remove trip button
         const button = document.createElement("button");
-        button.id = "remove-trip";
+        button.id = `remove-trip${counter}`;
         button.innerHTML = "remove trip";
+        
+        // add picture & trip content
+        const tripInfo = document.createElement("div");
+        const picture = document.createElement("div");
+        const tripContent = document.createElement("div");
+        
+        picture.classList.add("picture");
+        tripContent.classList.add("trip-content");
+        tripInfo.classList.add("trip-info");
+        tripInfo.id = `${resGeo.name}${counter}`;
+        
+        tripContent.appendChild(destinationTDiv);
+        tripContent.appendChild(destinationDiv);
+        tripContent.appendChild(dateDiv);
+        tripContent.appendChild(durationDiv);
+        tripContent.appendChild(daysDiv);
+        tripContent.appendChild(tempTDiv);
+        tripContent.appendChild(tempDiv);
+        tripContent.appendChild(button);
+
+        tripInfo.appendChild(picture);
+        tripInfo.appendChild(tripContent);
 
         // add divs to DOM
-        const content = document.getElementById("content");
-        content.appendChild(destinationTDiv);
-        content.appendChild(destinationDiv);
-        content.appendChild(dateDiv);
-        content.appendChild(durationDiv);
-        content.appendChild(daysDiv);
-        content.appendChild(tempTDiv);
-        content.appendChild(tempDiv);
-        content.appendChild(button);
+        resultDiv.appendChild(tripInfo);
+        
+        counter++;
 
     } catch (error) {
         console.log("error", error);

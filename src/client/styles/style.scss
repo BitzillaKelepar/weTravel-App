@@ -57,7 +57,7 @@ body {
 #name {
   color: $primary-color;
   font-size: 22px;
-  margin: 0px 0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 #date {
@@ -70,7 +70,7 @@ body {
   margin: 10px 0 10px 0;
 }
 
-#content {
+.trip-content {
   font-size: 16px;
   margin: 40px 0 10px 0;
 }
@@ -140,7 +140,7 @@ h1 {
 }
 
 footer {
-  position: absolute;
+  /*position: absolute;*/
   right: 0;
   bottom: 0;
   left: 0;
@@ -208,6 +208,7 @@ footer {
   border-radius: 10px;
   background-color: #ffffff;
   color: #343434;
+  margin: 2.5rem 0;
 }
 
 #result {
