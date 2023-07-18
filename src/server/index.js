@@ -36,9 +36,6 @@ function listening() {
     console.log(`server is running on localhost: ${port}`);
 }
 
-// Initialize empty trip object
-let myTrip = {};
-
 // API Keys
 const geoNameApi = process.env.GUSERNAME;
 console.log(`Your GeoNames API is: ${process.env.GUSERNAME}`);
@@ -51,7 +48,6 @@ console.log(`Your PixaBay API is: ${process.env.PIXABAY_KEY}`);
 const geoNameBaseURL = "http://api.geonames.org/searchJSON?q=";
 const weatherBitBaseURL = "https://api.weatherbit.io/v2.0/forecast/daily?";
 const pixaBayBaseURL = "https://pixabay.com/api/?";
-
 
 app.get('/', function (req, res) {
     res.sendFile("dist/index.html");
@@ -79,7 +75,6 @@ app.post("/weather", async function (req, res) {
         const weatherBitApiCall = `${weatherBitBaseURL}lat=${lat}&lon=${lng}&key=${weatherBitApi}`;
         const response = await fetch(weatherBitApiCall);
         const weatherBitData = await response.json();
-        console.log(weatherBitData);
         res.send(weatherBitData);
         
     } catch (error) {
@@ -99,19 +94,3 @@ app.post("/picture", async function (req, res) {
         console.log("error while retrieving PixaBay data", error);
     }
 });
-
-// POST Route
-app.post("/postData", async function (req, res) {
-    try {
-        let projectData = req.body;
-        console.log(`Your Data: ${projectData}`);
-        res.send(projectData);
-    } catch (error) {
-        console.log("error", error);
-    }
-});
-
-// GET Route
-app.get('/all', function (req, res) {
-    res.send(myTrip);
-})

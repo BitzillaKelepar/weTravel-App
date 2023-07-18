@@ -2,26 +2,10 @@ $primary-font: "Poppins", sans-serif;
 $primary-color: #4F46E5;
 $secondary-color: #343434;
 
-body {
-  background: #f3f3f3;
-  font-family: $primary-font;
-}
+/***********/
+/*   IDs   */
+/***********/
 
-.input-box label {
-  font-size: 1rem;
-  justify-content: flex-start;
-  align-items: start;
-  color: $secondary-color;
-  margin: 0 0 0.5rem 0;
-}
-
-.date, .trip-result {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
-}
-
-/* IDs */
 #app {
   display: grid;
   background: #f3f3f3;
@@ -50,9 +34,6 @@ body {
   justify-content: center;
 }
 
-#error {
-}
-
 #name {
   color: $primary-color;
   font-size: 22px;
@@ -69,11 +50,6 @@ body {
   margin: 10px 0 10px 0;
 }
 
-.trip-content {
-  font-size: 16px;
-  margin: 10px 0;
-}
-
 #location {
   margin: 10px 0 20px 0;
   width: 40rem;
@@ -83,20 +59,27 @@ body {
   width: 19rem;
 }
 
-#remove-trip {
+#result .trip-info .trip-content button {
   border: 2px solid $primary-color;
   background: none;
   color: $primary-color;
+  
+  &:hover {
+    border: none;
+    color: #f3f3f3;
+    background: $secondary-color;
+  }
 }
 
-#remove-trip:hover {
-  border: none;
-  color: #f3f3f3;
-  background: $secondary-color;
+/************/
+/*   Tags   */
+/************/
+
+body {
+  background: #f3f3f3;
+  font-family: $primary-font;
 }
 
-/* Tags */
-/*  Basic Styling To Override Default For Basic HTML Elements */
 label {
   display: block;
 }
@@ -126,12 +109,12 @@ button {
   border: none;
   border-radius: 8px;
   margin: 30px 0 0 0;
-}
-
-button:hover {
-  cursor: pointer;
-  background: $secondary-color;
-  color: #f3f3f3;
+  
+  &:hover {
+    cursor: pointer;
+    background: $secondary-color;
+    color: #f3f3f3;
+  }
 }
 
 h1 {
@@ -139,7 +122,6 @@ h1 {
 }
 
 footer {
-  /*position: absolute;*/
   right: 0;
   bottom: 0;
   left: 0;
@@ -147,7 +129,24 @@ footer {
   text-align: center;
 }
 
+/***********/
 /* Classes */
+/***********/
+
+.input-box label {
+  font-size: 1rem;
+  justify-content: flex-start;
+  align-items: start;
+  color: $secondary-color;
+  margin: 0 0 0.5rem 0;
+}
+
+.date, .trip-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+}
+
 .centered {
   display: flex;
   flex-direction: column;
@@ -159,7 +158,8 @@ footer {
 .picture {
   width: 100%;
   height: auto;
-  object-fit: cover
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .title {
@@ -167,6 +167,11 @@ footer {
   font-size: 26px;
   margin: 2rem 0 1rem 0;
   text-align: center;
+}
+
+.trip-content {
+  font-size: 16px;
+  margin: 10px 0;
 }
 
 .trip-title {
@@ -217,10 +222,6 @@ footer {
   padding: 1rem;
 }
 
-#result {
-
-}
-
 .empty {
   display: flex;
   flex-direction: column;
@@ -240,7 +241,6 @@ footer {
   color: $secondary-color;
 }
 
-
 /* Reset style for HTML element on active to have no border*/
 input:focus,
 select:focus,
@@ -253,19 +253,16 @@ button:focus {
 ::placeholder { /* Firefox, Chrome, Opera */
   color: $primary-color;
   font-family: $primary-font;
-
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
   color: $primary-color;
   font-family: $primary-font;
-
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: $primary-color;
   font-family: $primary-font;
-
 }
 
 @media (max-width: 740px) {
@@ -311,5 +308,4 @@ button:focus {
   #location {
     width: 14rem;
   }
-
 }
