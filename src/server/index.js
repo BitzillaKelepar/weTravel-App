@@ -50,7 +50,7 @@ console.log(`Your PixaBay API is: ${process.env.PIXABAY_KEY}`);
 // Base URLs
 const geoNameBaseURL = "http://api.geonames.org/searchJSON?q=";
 const weatherBitBaseURL = "https://api.weatherbit.io/v2.0/forecast/daily?";
-const pixaBayBaseURL = "https://pixabay.com/api/";
+const pixaBayBaseURL = "https://pixabay.com/api/?";
 
 
 app.get('/', function (req, res) {
@@ -65,10 +65,7 @@ app.post("/location", async function (req, res) {
         const response = await fetch(geoApiCall);
         const geoData = await response.json();
         res.send(geoData.geonames[0]);
-        myTrip = {
-            location: geoData.geonames[0].name,
-            country: geoData.geonames[0].countryName,
-        };
+        
     } catch (error) {
         console.log("error while retrieving GeoNames data", error);
     }
@@ -84,12 +81,7 @@ app.post("/weather", async function (req, res) {
         const weatherBitData = await response.json();
         console.log(weatherBitData);
         res.send(weatherBitData);
-        myTrip = {
-            temp1: weatherBitData.data[0].temp,
-            temp2: weatherBitData.data[1].temp,
-            high: "high_temp",
-            low: "low_temp"
-        };
+        
     } catch (error) {
         console.log("error while retrieving WeatherBit data", error);
     }
@@ -97,6 +89,15 @@ app.post("/weather", async function (req, res) {
 
 // PixaBay POST Route
 app.post("/picture", async function (req, res) {
+    try {
+        let location = req.body.city;
+        const pixaBayApiCall = `${pixaBayBaseURL}key=${pixaBayApi}&q=${location}`;
+        const response = await fetch(pixaBayApiCall);
+        const pixaData = await response.json();
+        res.send(pixaData.hits[0]);
+    } catch (error) {
+        console.log("error while retrieving PixaBay data", error);
+    }
 });
 
 // POST Route

@@ -37,14 +37,19 @@ function handleSubmit(event) {
         // console.log(`::: The trip duration is: ${tripDuration} days :::`);
 
         getLocation("http://localhost:8081/location", {location: formLocation})
-            .then(function (locationData) {
+            .then(function (resGeo) {
                 // Debugging - OK
-                console.log(locationData);
-                getWeather("http://localhost:8081/weather", locationData.lat, locationData.lng)
-                    .then(function (res) {
+                // console.log(resGeo);
+                getWeather("http://localhost:8081/weather", resGeo.lat, resGeo.lng)
+                    .then(function (resWB) {
                         // Debugging - OK
-                        // console.log(res);
-                        addTrip(locationData, res);
+                        // console.log(resWB);
+                        getPicture("http://localhost:8081/picture", {city: formLocation})
+                            .then(function(resPix) {
+                                // Debugging - OK
+                                console.log(formLocation);
+                                addTrip(resGeo, resWB, resPix);
+                        })
                     });
             });
 
@@ -58,7 +63,7 @@ function handleSubmit(event) {
 // Get location function
 const getLocation = async (url = "", location = {}) => {
     // Debugging - OK
-    console.log(location);
+    // console.log(location);
     try {
         const res = await fetch(url, {
             method: "POST",
@@ -78,7 +83,7 @@ const getLocation = async (url = "", location = {}) => {
 // Get weather function
 const getWeather = async (url = "", latitude = {}, longitude = {}) => {
     // Debugging - OK
-    console.log(latitude, longitude);
+    // console.log(latitude, longitude);
     try {
         const res = await fetch(url, {
             method: "POST",
@@ -95,16 +100,32 @@ const getWeather = async (url = "", latitude = {}, longitude = {}) => {
     }
 };
 
-// remove trip function
-function removeTrip(e) {
-    // document.body.removeChild(this.parentNode)
-}
+// Get picture function
+const getPicture = async (url = "", city = {}) => {
+    // Debugging - OK
+    // console.log(city);
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            credentials: "same-origin",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(city)
+        });
+        return await res.json();
+    } catch (error) {
+        console.log("error", error);
+    }
+};
 
 // Update UI function
-function addTrip(resGeo, resWB) {
+function addTrip(resGeo, resWB, resPix) {
     // Debugging
-    console.log(resGeo);
-    console.log(resWB);
+    // console.log(resGeo);
+    // console.log(resWB);
+    // console.log(resPix);
 
     try {
         const duration = getTripDuration();
@@ -165,9 +186,10 @@ function addTrip(resGeo, resWB) {
         // add picture & trip content
         const tripInfo = document.createElement("div");
         const picture = document.createElement("div");
+        
         const tripContent = document.createElement("div");
         
-        picture.classList.add("picture");
+        picture.innerHTML = `<img class="picture" src="${resPix.webformatURL}" alt="location picture">`;
         tripContent.classList.add("trip-content");
         tripInfo.classList.add("trip-info");
         tripInfo.id = `${resGeo.name}${counter}`;
