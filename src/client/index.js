@@ -1,14 +1,14 @@
-//import { formatScoreTag } from "./js/formatScoreTag"
 import { handleSubmit } from "./js/formHandler"
-import { isFutureDate, getTripDuration } from "./js/dateChecker"
+import { isFutureDate, getTripDuration, getTripStart } from "./js/dateChecker"
+import { getLocation, getPicture, getWeather } from "./js/postRoutes";
 
 import "./styles/style.scss"
 
-/*alert("I EXIST")
-console.log("CHANGE!!");*/
-
 export {
-    //formatScoreTag,
+    getLocation,
+    getWeather,
+    getPicture,
+    getTripStart,
     handleSubmit,
     getTripDuration,
     isFutureDate

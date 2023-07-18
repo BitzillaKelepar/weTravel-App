@@ -21,7 +21,8 @@
     "html-webpack-plugin": "^5.5.3",
     "node-fetch": "^2.6.12",
     "webpack": "^5.88.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",

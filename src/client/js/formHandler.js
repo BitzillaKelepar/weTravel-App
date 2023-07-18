@@ -45,6 +45,8 @@ function handleSubmit(event) {
             });
     } else if ((isFutureDate(formDate1) && isFutureDate(formDate2)) && (tripDuration < 1)) {
         alert("Please provide a valid trip duration. The submitted return date is before the departure.");
+    } else if ((isFutureDate(formDate1) && isFutureDate(formDate2)) && (tripDuration >= 1) && (formLocation === isEmpty)) {
+        alert("Please provide a location.");
     } else {
         alert("Please provide a date in the future. The submitted date is in the past.");
     }
